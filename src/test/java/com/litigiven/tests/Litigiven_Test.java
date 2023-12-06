@@ -1,13 +1,16 @@
 package com.litigiven.tests;
 
 import com.litigiven.pages.Litigiven_ContactPage;
-import com.litigiven.utilities.BrowserUtils;
 import com.litigiven.utilities.ConfigurationReader;
 import com.litigiven.utilities.Driver;
 import org.openqa.selenium.interactions.Actions;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
+
+import java.time.Duration;
 
 public class Litigiven_Test {
 
@@ -38,11 +41,14 @@ public class Litigiven_Test {
         Actions actions = new Actions(Driver.getDriver());
 
         // Hover over the More option on the upper right corner
-        BrowserUtils.sleep(2);
+        WebDriverWait wait = new WebDriverWait(Driver.getDriver(), Duration.ofSeconds(10));
+        wait.until(ExpectedConditions.visibilityOf(contactPage.homepageMoreOption));
+
         actions.moveToElement(contactPage.homepageMoreOption).perform();
 
         //3. click Contact on the dropdown
-        BrowserUtils.sleep(3);
+        wait.until(ExpectedConditions.elementToBeClickable(contactPage.contactpageClick));
+
         contactPage.contactpageClick.click();
 
         //4. type first name in the firstname inputbox
@@ -63,6 +69,6 @@ public class Litigiven_Test {
        // String expectedResultMessage ="Thanks for submitting!";
        // String actualResultMessage = contactPage.thanksgivingMessage.getText();
 
-       // Assert.assertTrue(actualResultMessage.equals(expectedResultMessage),"The acual message provided is not as expected!!!");
+       // Assert.assertTrue(actualResultMessage.equals(expectedResultMessage),"The actual message provided is not as expected!!!");
     }
 }
